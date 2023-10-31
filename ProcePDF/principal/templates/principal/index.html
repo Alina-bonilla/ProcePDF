@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesPrincipal.css' %}">
+    <title>ProcePDF </title>
+</head>
+<body class="fondoPrincipal">
+    <div class="contenedorPrincipal">
+        <img src="{% static 'imagen/logo.png' %}" alt="Logo" class="logo">
+        <h1 class= "titulo" > ProcePDF</h1>
+    </div>
+
+    <div class="contenedorDescripcion">
+        <p>El ProcePDF es una innovadora herramienta que te permite importar fácilmente tus archivos PDF escaneados y en cuestión de minutos, extraer el texto, obtener un resumen del contenido y descubrir las ideas principales. Además, "ProcePDF" genera presentaciones de PowerPoint a partir de tu PDF, crea collages visuales de palabras clave y busca imágenes relacionadas.</p>
+    </div>
+    
+    <div>
+        <button class="buttonSeleccionar">Seleccionar Archivo</button>
+        <label class="textoSeleccionar">Sin archivo seleccionado</label>
+        <label class="tituloTextExt">Texto Extraído</label>
+        <label id="textoDinamico" class="contenedorMediano">Texto</label>
+    </div>
+    
+    <script>
+        function actualizarTexto() {
+            const textoDinamico = document.getElementById("textoDinamico");
+            const textos = ["Texto 1", "Texto 2", "Texto 3"];
+            textoDinamico.textContent = textos;
+        }
+            window.onload = actualizarTexto;
+    </script>
+
+</body>
+</html>

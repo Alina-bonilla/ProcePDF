@@ -1,0 +1,136 @@
+.fondoPrincipal {
+    background-color: #F5F5EF; 
+}
+
+.contenedorPrincipal {
+    width: 100%; 
+    height: 20%; 
+    background-color: #F5F5EF; /* Define el color de fondo */
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    /*position: absolute;*/
+}
+
+.logo{
+    position: absolute;
+    top: 1%; /* Ajusta la posición vertical de la imagen */
+    left: 1%; /* Ajusta la posición horizontal de la imagen */
+    width: 7%; /* Ajusta el ancho de la imagen */
+    height: 4%;
+}
+
+.titulo{
+    font-size: 47px;
+    font-family: 'Helvetica';
+    font-weight: bold;
+}
+
+.contenedorDescripcion {
+    justify-content: center; /* Centra horizontalmente el contenido */
+    /*padding: 10px 15px;*//*estapacio del texto de Superior-infe izq-dere*/
+    text-align: justify;
+    font-family: 'Helvetica';
+    font-size: 18px;
+    margin-top: 20px;
+    width: 70%; /* Ajusta el ancho de la imagen */
+    height: 20%;
+    background-color: #F5F5EF;
+    margin:auto;
+}
+
+.buttonSeleccionar {
+    margin-top: 10px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    width: 13%;
+    height: 2%;
+    border-radius: 10px;
+    background-color: #64A0EF;
+    color: black;
+    font-family: 'Helvetica';
+    font-size: 18px; 
+    margin-left: 15%; /* Ajusta el margen izquierdo*/
+    /*position: absolute;*/
+}
+
+.textoSeleccionar {
+    margin-top: 10px;
+    padding: 10px 15px;
+    width: 60%;
+    height: 2%;
+    background-color: white;
+    color: black;
+    font-family: 'Helvetica';
+    font-size: 18px; 
+    border-radius: 10px;
+    margin-left: 0%; /* Ajusta el margen izquierdo*/
+    /*position: absolute;*/
+}
+
+.tituloTextExt {
+    width: 500px;
+    height: 20px;
+    background-color: white;
+    font-size: 18px; 
+    font-family: 'Helvetica';
+    padding: 5px 5px;
+    border: 5px solid #D9D9D9; 
+    margin-left: 5.1%; /* Ajusta el margen izquierdo*/
+    margin-top: 1%;
+    /*position: absolute;*/
+    
+}
+
+.contenedorMediano {
+    /*margin-top: 10px;*/
+    padding: 5px 5px;
+    width: 530px; 
+    height: 600px; 
+    background-color: white; /* Define el color de fondo */
+    border: 5px solid #D9D9D9; 
+    display: flex;
+    margin-left: 49%;
+    margin-top: 0%;
+    font-size: 14px; 
+    font-family: 'Helvetica';
+  }
+
+
+
+
+
+.texto{
+    font-size: 16px;
+    font-family: 'Open Sans';
+}
+
+.p {
+    background-color: rgb(207, 13, 13);
+}
+
+.lineaAzul {
+    padding-right: 10px; 
+    width: 90%; 
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: #202020;
+    color: rgb(10, 1, 1);
+    margin-top: 20px; /* Agrega espacio en la parte superior */
+    font-size: 16px; /*Tamaño de texto*/
+}
+
+.header {
+    background-size: cover;
+    background-position: top left;
+    height: 100px; /* Altura de la imagen */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1; /* Asegura que la imagen esté por encima de todo el contenido */
+}
+
+
