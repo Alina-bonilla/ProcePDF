@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesIdeas.css' %}">
+    <title>ProcePDF </title>
+</head>
+<body class="fondoPrincipal">
+    <div class="contenedorPrincipal">
+        <img src="{% static 'imagen/logo.png' %}" alt="Logo" class="logo">
+        <h1 class= "titulo" > ProcePDF</h1>
+    </div>
+
+    <div class="contenedorDescripcion">
+        <p>Las ideas principales del archivo “Nombre del archivo” son:</p>
+    </div>
+    
+    <div>
+        <div class="row">
+            <button class="buttonPrimeros">Resumen</button>
+
+            <button id="cargarArchivo" class="buttonSegundos">Cargar archivo</button>
+            <script>
+            document.getElementById("cargarArchivo").addEventListener("click", function() {
+                window.location.href = "{% url 'index' %}";
+            });
+            </script>
+
+            <button class="buttonTerceros">Descargar</button>
+        </div>
+
+        <div class="row">
+            <button class="buttonPrimeros">Imágenes</button>
+            <button class="buttonSegundos">Presentación</button>
+            <button id="vCollage" class="buttonTerceros">Collage</button>
+            <script>
+            document.getElementById("vCollage").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaCollage' %}";
+            });
+            </script>
+        </div>
+        <label class="tituloTextExt">Ideas principales del texto</label>
+        <label class="contenedorMediano">
+            1- Texto <br>
+            2- Texto <br>
+            3- Texto <br>
+            4- Texto <br>
+            5- Texto <br>
+        </label>
+    </div>
+    <!-- Contenido del pie de página -->
+    <div class="pieDePagina">
+        <p>Contacto: info@ejemplo.com</p>
+    </div>
+</body>
+</html>

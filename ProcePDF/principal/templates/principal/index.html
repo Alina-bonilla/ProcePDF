@@ -12,24 +12,39 @@
     </div>
 
     <div class="contenedorDescripcion">
-        <p>El ProcePDF es una innovadora herramienta que te permite importar fácilmente tus archivos PDF escaneados y en cuestión de minutos, extraer el texto, obtener un resumen del contenido y descubrir las ideas principales. Además, "ProcePDF" genera presentaciones de PowerPoint a partir de tu PDF, crea collages visuales de palabras clave y busca imágenes relacionadas.</p>
+        <p>El ProcePDF es una innovadora herramienta que te permite importar fácilmente tus archivos PDF escaneados y en cuestión de minutos, extraer el texto, elabora un resumen del contenido y descubrir las ideas principales. Además, "ProcePDF" genera presentaciones en PowerPoint a partir de tu PDF, crea un collage de palabras clave y busca imágenes relacionadas al tema del PDF.</p>
     </div>
     
     <div>
         <button class="buttonSeleccionar">Seleccionar Archivo</button>
         <label class="textoSeleccionar">Sin archivo seleccionado</label>
-        <label class="tituloTextExt">Texto Extraído</label>
-        <label id="textoDinamico" class="contenedorMediano">Texto</label>
-    </div>
-    
-    <script>
-        function actualizarTexto() {
-            const textoDinamico = document.getElementById("textoDinamico");
-            const textos = ["Texto 1", "Texto 2", "Texto 3"];
-            textoDinamico.textContent = textos;
-        }
-            window.onload = actualizarTexto;
-    </script>
+        <div class="row">
+            <button class="buttonPrimeros">Extraer</button>
+            <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
+            <script>
+            document.getElementById("vIdeas").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaIdeas' %}";
+            });
+            </script>
+            <button class="buttonTerceros">Resumen</button>
+        </div>
 
+        <div class="row">
+            <button class="buttonPrimeros">Imágenes</button>
+            <button class="buttonSegundos">Presentación</button>
+            <button id="vCollage" class="buttonTerceros">Collage</button>
+            <script>
+            document.getElementById("vCollage").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaCollage' %}";
+            });
+            </script>
+        </div>
+        <label class="tituloTextExt">Texto Extraído</label>
+        <label class="contenedorMediano">Texto</label>
+    </div>
+    <!-- Contenido del pie de página -->
+    <div class="pieDePagina">
+        <p>Contacto: info@ejemplo.com</p>
+    </div>
 </body>
 </html>

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-bich$a)r4-eua&^yt$oa5c(a^c3clk8!=vmx(!t$^hk34-+ku#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ProcePDF.wsgi.application'
+WSGI_APPLICATION = 'ProcePDF.wsgi.app'
 
 
 # Database

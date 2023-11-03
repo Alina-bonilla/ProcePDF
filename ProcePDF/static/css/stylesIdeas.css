@@ -38,36 +38,6 @@
     margin:auto;
 }
 
-.buttonSeleccionar {
-    margin-top: 10px;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    width: 13%;
-    height: 2%;
-    border-radius: 10px;
-    background-color: #64A0EF;
-    color: black;
-    font-family: 'Helvetica';
-    font-size: 18px; 
-    margin-left: 15%; /* Ajusta el margen izquierdo*/
-    /*position: absolute;*/
-}
-
-.textoSeleccionar {
-    margin-top: 10px;
-    padding: 10px 15px;
-    width: 15%;
-    height: 2%;
-    background-color: white;
-    color: black;
-    font-family: 'Helvetica';
-    font-size: 18px; 
-    border-radius: 10px;
-    margin-left: 0%; /* Ajusta el margen izquierdo*/
-    /*position: absolute;*/
-}
-
 .tituloTextExt {
     padding: 5px 5px;
     width: 35%; 
@@ -76,7 +46,7 @@
     border: 5px solid #D9D9D9; 
     display: flex;
     margin-left: 49%;
-    margin-top: -14%;
+    margin-top: -9%;
     font-size: 18px; 
     font-family: 'Helvetica';
 }
@@ -84,13 +54,13 @@
 .contenedorMediano {
     padding: 5px 5px;
     width: 35%; 
-    height: 600px; 
+    height: 400px; 
     background-color: white; /* Define el color de fondo */
     border: 5px solid #D9D9D9; 
     display: flex;
     margin-left: 49%;
     margin-top: 0%;
-    font-size: 14px; 
+    font-size: 15px; 
     font-family: 'Helvetica';
     overflow: auto;
     margin-bottom: 80px; 

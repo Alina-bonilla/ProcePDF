@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesCollage.css' %}">
+    <title>ProcePDF </title>
+</head>
+<body class="fondoPrincipal">
+    <div class="contenedorPrincipal">
+        <img src="{% static 'imagen/logo.png' %}" alt="Logo" class="logo">
+        <h1 class= "titulo" > ProcePDF</h1>
+    </div>
+
+    <div class="contenedorDescripcion">
+        <p>El collage de las palabras claves del texto que se encuentra en el archivo “Nombre del archivo” es:</p>
+    </div>
+    
+    <div>
+
+        <div class="row">
+            <button class="buttonPrimeros">Imágenes</button>
+            <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
+            <script>
+            document.getElementById("vIdeas").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaIdeas' %}";
+            });
+            </script>
+            <button class="buttonTerceros">Presentación</button>
+        </div>
+        <div class="row">
+            <button class="buttonPrimeros">Resumen</button>
+            <button id="cargarArchivo" class="buttonSegundos">Cargar archivo</button>
+            <script>
+            document.getElementById("cargarArchivo").addEventListener("click", function() {
+                window.location.href = "{% url 'index' %}";
+            });
+            </script>
+            <button class="buttonTerceros">Descargar</button>
+        </div>
+        <label class="contenedorMediano">
+            <img src="{% static 'imagen/ejemplo.jpeg' %}" alt="collage">
+        </label>
+    </div>
+    <!-- Contenido del pie de página -->
+    <div class="pieDePagina">
+        <p>Contacto: info@ejemplo.com</p>
+    </div>
+</body>
+</html>
