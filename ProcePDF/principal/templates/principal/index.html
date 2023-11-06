@@ -16,12 +16,11 @@
     </div>
     <div>      
         <div>
-            <form method="post" enctype="multipart/form-data" action="{% url 'extract_text' %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'extraerTexto' %}">
                 {% csrf_token %}
                 <label for="pdf_file" class="buttonSeleccionar">Seleccionar Archivo</label>
                 <input type="file" id="pdf_file" name="pdf_file" style="display: none;" onchange="updateFileName(this);">
                 <span id="file-name" class="textoSeleccionar">Sin archivo seleccionado</span>
-
             </form>     
 
             <script>
@@ -49,7 +48,7 @@
                         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');// Agregar el token CSRF a la solicitud AJAX
 
                         $.ajax({
-                            url: '{% url "extract_text" %}',
+                            url: '{% url "extraerTexto" %}',
                             type: 'post',
                             data: formData,
                             processData: false,
@@ -58,6 +57,10 @@
                                 console.log(data)
                                 if ('text' in data) {
                                     $('#text_result').text(data.text);
+                                    // Después de extraer el texto con éxito
+                                    var extractedText = data.text;
+                                    $('#text_input').val(extractedText);
+
                                 } else {
                                     alert('Error al extraer el texto del PDF');
                                 }
@@ -82,7 +85,13 @@
             });
             </script>
 
-            <button id="resumen" class="buttonTerceros">Resumen</button>
+            <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="text" value="{{ text }}">
+                <button id="resumen" class="buttonTerceros">Resumen</button>
+            </form>
+
+            <!--<button id="resumen" class="buttonTerceros">Resumen</button>-->
             <script>
             document.getElementById("resumen").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaResumen' %}";

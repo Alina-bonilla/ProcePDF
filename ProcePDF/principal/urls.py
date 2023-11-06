@@ -9,6 +9,7 @@ urlpatterns = [
     path('ventanaImagenes/', views.ventanaImagenes, name='ventanaImagenes'),
     path('ventanaPpt/', views.ventanaPpt, name='ventanaPpt'),
 
-    path('extract_text/', views.extract_text, name='extract_text'),
+    path('extraerTexto/', views.extraerTexto, name='extraerTexto'),
+    path('generarResumen/', views.generarResumen, name='generarResumen'),  
 
 ]
