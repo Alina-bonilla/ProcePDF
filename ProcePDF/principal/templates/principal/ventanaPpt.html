@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesPpt.css' %}">
+    <title>ProcePDF </title>
+</head>
+<body class="fondoPrincipal">
+    <div class="contenedorPrincipal">
+        <img src="{% static 'imagen/logo.png' %}" alt="Logo" class="logo">
+        <h1 class= "titulo" > ProcePDF</h1>
+    </div>
+
+    <div class="contenedorDescripcion">
+        <p>A continuación, se muestra una ppt del “Nombre del archivo”, recuerde que puede acerle todas las modificaciones que sean necesarias.”</p>
+    </div>
+    
+    <div>
+        <div>
+            Opciones de ppt
+        </div>
+        
+        <!-- Botones -->
+        <div class="row">
+            <button id="cargarArchivo" class="buttonPrimeros">Cargar archivo</button>
+            <script>
+            document.getElementById("cargarArchivo").addEventListener("click", function() {
+                window.location.href = "{% url 'index' %}";
+            });
+            </script>
+    
+            <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
+            <script>
+            document.getElementById("vIdeas").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaIdeas' %}";
+            });
+            </script>
+    
+            <button id="vResumen" class="buttonSegundos">Resumen</button>
+            <script>
+            document.getElementById("vResumen").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaResumen' %}";
+            });
+            </script>
+
+            <button id="vImagenes" class="buttonSegundos">Imágenes</button>
+            <script>
+            document.getElementById("vImagenes").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaImagenes' %}";
+            });
+            </script>
+
+            <button id="vCollage" class="buttonSegundos">Collage</button>
+            <script>
+            document.getElementById("vCollage").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaCollage' %}";
+            });
+            </script>
+    
+            <button class="buttonSegundos">Descargar</button>
+    
+        </div>
+    </div>
+
+    <!-- Contenido del pie de página -->
+    <div class="pieDePagina">
+        <p>Contacto: info@ejemplo.com</p>
+    </div>
+</body>
+</html>

@@ -14,24 +14,97 @@
     <div class="contenedorDescripcion">
         <p>El ProcePDF es una innovadora herramienta que te permite importar fácilmente tus archivos PDF escaneados y en cuestión de minutos, extraer el texto, elabora un resumen del contenido y descubrir las ideas principales. Además, "ProcePDF" genera presentaciones en PowerPoint a partir de tu PDF, crea un collage de palabras clave y busca imágenes relacionadas al tema del PDF.</p>
     </div>
-    
-    <div>
-        <button class="buttonSeleccionar">Seleccionar Archivo</button>
-        <label class="textoSeleccionar">Sin archivo seleccionado</label>
-        <div class="row">
-            <button class="buttonPrimeros">Extraer</button>
+    <div>      
+        <div>
+            <form method="post" enctype="multipart/form-data" action="{% url 'extract_text' %}">
+                {% csrf_token %}
+                <label for="pdf_file" class="buttonSeleccionar">Seleccionar Archivo</label>
+                <input type="file" id="pdf_file" name="pdf_file" style="display: none;" onchange="updateFileName(this);">
+                <span id="file-name" class="textoSeleccionar">Sin archivo seleccionado</span>
+
+            </form>     
+
+            <script>
+                function updateFileName(input) {
+                    const fileName = input.value.split("\\").pop();
+                    const span = document.getElementById("file-name");
+                    const maxLength = 30; // Define la longitud máxima que deseas mostrar
+                    if (fileName.length > maxLength) {
+                        const truncatedFileName = fileName.substring(0, maxLength) + " ..."; // Agrega puntos suspensivos al final
+                        span.textContent = truncatedFileName;
+                    } else {
+                        span.textContent = fileName;
+                    }
+                }
+            </script>
+            
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#extract_btn').on('click', function(e) {
+                        e.preventDefault();
+                        var formData = new FormData();
+                        var pdfFile = $('#pdf_file')[0].files[0];
+                        formData.append('pdf_file', pdfFile)
+                        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');// Agregar el token CSRF a la solicitud AJAX
+
+                        $.ajax({
+                            url: '{% url "extract_text" %}',
+                            type: 'post',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(data) {
+                                console.log(data)
+                                if ('text' in data) {
+                                    $('#text_result').text(data.text);
+                                } else {
+                                    alert('Error al extraer el texto del PDF');
+                                }
+                            },
+                            error: function() {
+                                alert('Error al enviar la solicitud');
+                            }
+                        });
+                    });
+                });
+            </script>          
+        </div>
+
+        <!-- Botones -->
+        <div class="row">    
+            <button class="buttonPrimeros" type="submit" id="extract_btn">Extraer</button>
+
             <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
             <script>
             document.getElementById("vIdeas").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaIdeas' %}";
             });
             </script>
-            <button class="buttonTerceros">Resumen</button>
+
+            <button id="resumen" class="buttonTerceros">Resumen</button>
+            <script>
+            document.getElementById("resumen").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaResumen' %}";
+            });
+            </script>
         </div>
 
         <div class="row">
-            <button class="buttonPrimeros">Imágenes</button>
-            <button class="buttonSegundos">Presentación</button>
+            <button id="vImagenes" class="buttonPrimeros">Imágenes</button>
+            <script>
+            document.getElementById("vImagenes").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaImagenes' %}";
+            });
+            </script>
+
+            <button id="vPpt" class="buttonSegundos">Presentación</button>
+            <script>
+            document.getElementById("vPpt").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaPpt' %}";
+            });
+            </script>
+            
             <button id="vCollage" class="buttonTerceros">Collage</button>
             <script>
             document.getElementById("vCollage").addEventListener("click", function() {
@@ -40,7 +113,10 @@
             </script>
         </div>
         <label class="tituloTextExt">Texto Extraído</label>
-        <label class="contenedorMediano">Texto</label>
+        <div class="contenedorMediano" id="texto-extraido">
+            <div id="text_result">{{ text }}</div>
+        </div>
+    
     </div>
     <!-- Contenido del pie de página -->
     <div class="pieDePagina">

@@ -38,62 +38,29 @@
     margin:auto;
 }
 
-.buttonSeleccionar {
-    margin-top: 10px;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    width: 13%;
-    height: 2%;
-    border-radius: 10px;
-    background-color: #64A0EF;
-    color: black;
-    font-family: 'Helvetica';
-    font-size: 18px; 
-    margin-left: 15%; /* Ajusta el margen izquierdo*/
-    /*position: absolute;*/
-}
-
-.textoSeleccionar {
-    margin-top: 10px;
-    padding: 10px 15px;
-    width: 12%;
-    height: 2%;
-    background-color: white;
-    color: black;
-    font-family: 'Helvetica';
-    font-size: 18px; 
-    border-radius: 10px;
-    margin-left: 0%; /* Ajusta el margen izquierdo*/
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    overflow: hidden; /* Oculta el texto que excede el ancho del contenedor */
-    text-overflow: ellipsis; /* Agrega puntos suspensivos (...) para indicar que se corta el texto */
-    /*position: absolute;*/
-}
-
 .tituloTextExt {
     padding: 5px 5px;
-    width: 35%; 
+    width: 80%; 
     height: 24px; 
     background-color: white; /* Define el color de fondo */
     border: 5px solid #D9D9D9; 
     display: flex;
-    margin-left: 49%;
-    margin-top: -14%;
+    margin-left: 10%;
+    margin-top: 5%;
     font-size: 18px; 
     font-family: 'Helvetica';
 }
 
 .contenedorMediano {
     padding: 5px 5px;
-    width: 35%; 
-    height: 600px; 
+    width: 80%; 
+    height: 400px; 
     background-color: white; /* Define el color de fondo */
     border: 5px solid #D9D9D9; 
     display: flex;
-    margin-left: 49%;
+    margin-left: 10%;
     margin-top: 0%;
-    font-size: 14px; 
+    font-size: 15px; 
     font-family: 'Helvetica';
     overflow: auto;
     margin-bottom: 80px; 
@@ -101,12 +68,12 @@
 
 
 .buttonPrimeros {   
-    margin-left: 15%;
+    margin-left: 16%;
     border: none;
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 8%; /* Ancho del botón personalizado */
+    width: 10%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -114,6 +81,7 @@
     font-size: 17px;
     text-align: center;
     margin-right: 5px;
+    margin-bottom: 10%;
 }
 
 .buttonSegundos {   
@@ -122,22 +90,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 12%; /* Ancho del botón personalizado */
-    height: 2%; /* Ajusta la altura según tus necesidades */
-    background-color: #004AAD; /* Color de fondo del botón */
-    color: white; /* Color del texto en el botón */
-    font-family: 'Helvetica';
-    font-size: 17px;
-    margin-right: 5px;
-}
-
-.buttonTerceros {   
-    margin-left: 1%;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 10px;
-    cursor: pointer;
-    width: 8%; /* Ancho del botón personalizado */
+    width: 10%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -153,6 +106,7 @@
 }
 
 .pieDePagina {  
+    margin-top: 5%;
     color: #004AAD;
     background-color: #004AAD; /* Color azul */
     width: 100%;

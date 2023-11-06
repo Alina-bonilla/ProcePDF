@@ -15,9 +15,15 @@
         <p>Las ideas principales del archivo “Nombre del archivo” son:</p>
     </div>
     
+    <!-- Botones -->
     <div>
         <div class="row">
-            <button class="buttonPrimeros">Resumen</button>
+            <button id="resumen" class="buttonPrimeros">Resumen</button>
+            <script>
+            document.getElementById("resumen").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaResumen' %}";
+            });
+            </script>
 
             <button id="cargarArchivo" class="buttonSegundos">Cargar archivo</button>
             <script>
@@ -25,17 +31,27 @@
                 window.location.href = "{% url 'index' %}";
             });
             </script>
-
             <button class="buttonTerceros">Descargar</button>
+
         </div>
 
         <div class="row">
-            <button class="buttonPrimeros">Imágenes</button>
-            <button class="buttonSegundos">Presentación</button>
-            <button id="vCollage" class="buttonTerceros">Collage</button>
+            <button id="vImagenes" class="buttonPrimeros">Imágenes</button>
+            <script>
+            document.getElementById("vImagenes").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaImagenes' %}";
+            });
+            </script>
+            <button id="vCollage" class="buttonSegundos">Collage</button>
             <script>
             document.getElementById("vCollage").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaCollage' %}";
+            });
+            </script>           
+            <button id="vPpt" class="buttonTerceros">Presentación</button>
+            <script>
+            document.getElementById("vPpt").addEventListener("click", function() {
+                window.location.href = "{% url 'ventanaPpt' %}";
             });
             </script>
         </div>
