@@ -51,6 +51,7 @@ def extraerTexto(request):
         return JsonResponse({'text': text})
     return JsonResponse({'error': 'No se proporcionó un archivo PDF válido'})
 
+
 #Extrae el texto de las imagenes del PDF
 def extraerTextoImagen(pdf_path):
     image_dir = os.path.join(settings.MEDIA_ROOT, 'pdf_images')
@@ -74,6 +75,7 @@ def extraerTextoImagen(pdf_path):
     else:
         return 'Archivo PDF no encontrado'
 
+
 # Elimina todos los archivos en el directorio de imagenes
 def eliminarImagen():
     image_dir = os.path.join(settings.MEDIA_ROOT, 'pdf_images')
@@ -86,6 +88,7 @@ def eliminarImagen():
             except Exception as e:
                 print(f"Error al eliminar {file_path}: {e}")
         os.rmdir(image_dir)
+
 
 #Genera un resumen del texto extraido
 def generarResumen(request):
@@ -127,6 +130,5 @@ def generarResumen(request):
     for oracion in oraciones:
         if (oracion in oracionValor) and (oracionValor[oracion] > (1.2 * promedio)):    
             resumen += " " + oracion # El resumen va a agregar un espacio más la oración que aprobó la condición.
-    print(resumen)
     return render(request, 'principal/ventanaResumen.html', {'text': text, 'resumen': resumen})
 

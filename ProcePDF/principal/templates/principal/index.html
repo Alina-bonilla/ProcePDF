@@ -34,6 +34,7 @@
                     } else {
                         span.textContent = fileName;
                     }
+                    $('#extract_btn').prop('disabled', false);
                 }
             </script>
             
@@ -69,6 +70,11 @@
                                 alert('Error al enviar la solicitud');
                             }
                         });
+                        $('#vIdeas').prop('disabled', false);
+                        $('#resumen').prop('disabled', false);
+                        $('#vImagenes').prop('disabled', false);
+                        $('#vPpt').prop('disabled', false);
+                        $('#vCollage').prop('disabled', false);
                     });
                 });
             </script>          
@@ -76,45 +82,46 @@
 
         <!-- Botones -->
         <div class="row">    
-            <button class="buttonPrimeros" type="submit" id="extract_btn">Extraer</button>
+            <button class="buttonPrimeros" type="submit" id="extract_btn" disabled>Extraer</button>
 
-            <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
+            <button id="vIdeas" class="buttonSegundos" disabled>Ideas Principales</button>
             <script>
             document.getElementById("vIdeas").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaIdeas' %}";
             });
             </script>
 
-            <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="text" value="{{ text }}">
-                <button id="resumen" class="buttonTerceros">Resumen</button>
-            </form>
+            <div>
+                <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="resumen" class="buttonTerceros" disabled>Resumen</button>
+                </form>
+                <script>
+                    document.getElementById("resumen").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaResumen' %}";
 
-            <!--<button id="resumen" class="buttonTerceros">Resumen</button>-->
-            <script>
-            document.getElementById("resumen").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaResumen' %}";
-            });
-            </script>
+                    });
+                </script>
+            </div>
         </div>
 
         <div class="row">
-            <button id="vImagenes" class="buttonPrimeros">Imágenes</button>
+            <button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
             <script>
             document.getElementById("vImagenes").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaImagenes' %}";
             });
             </script>
 
-            <button id="vPpt" class="buttonSegundos">Presentación</button>
+            <button id="vPpt" class="buttonSegundos" disabled>Presentación</button>
             <script>
             document.getElementById("vPpt").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaPpt' %}";
             });
             </script>
             
-            <button id="vCollage" class="buttonTerceros">Collage</button>
+            <button id="vCollage" class="buttonTerceros" disabled>Collage</button>
             <script>
             document.getElementById("vCollage").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaCollage' %}";

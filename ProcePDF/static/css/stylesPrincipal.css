@@ -100,7 +100,7 @@
   }
 
 
-.buttonPrimeros {   
+.buttonPrimeros:not(:disabled) {   
     margin-left: 15%;
     border: none;
     border-radius: 10px;
@@ -116,7 +116,25 @@
     margin-right: 5px;
 }
 
-.buttonSegundos {   
+/* Botones desactivados */
+.buttonPrimeros:disabled {
+    margin-left: 15%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 8%; /* Ancho del botón personalizado */
+    height: 2%; /* Ajusta la altura según tus necesidades */
+    background-color:  #c6daf3; /* Color de fondo gris para botones desactivados */
+    color: black; /* Color de texto gris para botones desactivados */
+    font-family: 'Helvetica';
+    font-size: 17px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+
+.buttonSegundos:not(:disabled) {   
     margin-left: 1%;
     border: none;
     border-radius: 10px;
@@ -131,7 +149,37 @@
     margin-right: 5px;
 }
 
-.buttonTerceros {   
+.buttonSegundos:disabled {
+    margin-left: 1%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 12%; /* Ancho del botón personalizado */
+    height: 2%; /* Ajusta la altura según tus necesidades */
+    background-color: #c6daf3; /* Color de fondo gris para botones desactivados */
+    color: black; /* Color de texto gris para botones desactivados */
+    font-family: 'Helvetica';
+    font-size: 17px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.buttonTerceros:not(:disabled) {   
+    margin-left: 1%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 100%; /* 12 Ancho del botón personalizado */
+    height: 2%; /* Ajusta la altura según tus necesidades */
+    background-color: #004AAD; /* Color de fondo del botón */
+    color: white; /* Color del texto en el botón */
+    font-family: 'Helvetica';
+    font-size: 17px;
+    margin-right: 5px;
+}
+.buttonTerceros:disabled {
     margin-left: 1%;
     border: none;
     border-radius: 10px;
@@ -139,10 +187,11 @@
     cursor: pointer;
     width: 8%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
-    background-color: #004AAD; /* Color de fondo del botón */
-    color: white; /* Color del texto en el botón */
+    background-color: #c6daf3; /* Color de fondo gris para botones desactivados */
+    color: black; /* Color de texto gris para botones desactivados */
     font-family: 'Helvetica';
     font-size: 17px;
+    text-align: center;
     margin-right: 5px;
 }
 
