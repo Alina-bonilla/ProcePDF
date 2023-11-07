@@ -29,8 +29,10 @@
             <script>
             document.getElementById("cargarArchivo").addEventListener("click", function() {
                 window.location.href = "{% url 'index' %}";
+                request.session['extracted_text'] = ''
             });
             </script>
+
             <button class="buttonTerceros">Descargar</button>
 
         </div>
@@ -55,14 +57,12 @@
             });
             </script>
         </div>
+
         <label class="tituloTextExt">Ideas principales del texto</label>
-        <label class="contenedorMediano">
-            1- Texto <br>
-            2- Texto <br>
-            3- Texto <br>
-            4- Texto <br>
-            5- Texto <br>
-        </label>
+        <div class="contenedorMediano">
+            <div id="ideas_result">{{ ideas_principales|safe }}</div>
+        </div>
+
     </div>
     <!-- Contenido del pie de página -->
     <div class="pieDePagina">

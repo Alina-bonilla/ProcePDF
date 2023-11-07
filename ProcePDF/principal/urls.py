@@ -11,5 +11,8 @@ urlpatterns = [
 
     path('extraerTexto/', views.extraerTexto, name='extraerTexto'),
     path('generarResumen/', views.generarResumen, name='generarResumen'),  
+    path('generarIdeasPrincipales/', views.generarIdeasPrincipales, name='generarIdeasPrincipales'),  
+    path('generarCollage/', views.generarCollage, name='generarCollage'),
+    path('buscarImagenes/', views.buscarImagenes, name='buscarImagenes'),
 
 ]

@@ -140,7 +140,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 12%; /* Ancho del botón personalizado */
+    width: 100%; /* 12Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -155,7 +155,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 12%; /* Ancho del botón personalizado */
+    width: 100%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #c6daf3; /* Color de fondo gris para botones desactivados */
     color: black; /* Color de texto gris para botones desactivados */
@@ -171,7 +171,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 100%; /* 12 Ancho del botón personalizado */
+    width: 100%; /* 8 Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -185,7 +185,7 @@
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 8%; /* Ancho del botón personalizado */
+    width: 100%; /*8 Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #c6daf3; /* Color de fondo gris para botones desactivados */
     color: black; /* Color de texto gris para botones desactivados */

@@ -16,14 +16,18 @@
     </div>
     
     <div>
-        <div class="image-row">
+        <!--<div class="image-row">
             <img src="{% static 'imagen/ejemplo.jpeg' %}" alt="Imagen 1" class="image-container-P"> 
             
             <img src="{% static 'imagen/logo.png' %}" alt="Imagen 2" class="image-container-C">
             <img src="{% static 'imagen/ejemplo.jpeg' %}" alt="Imagen 3" class="image-container-C">
             <img src="{% static 'imagen/logo.png' %}" alt="Imagen 4" class="image-container-C">
             <img src="{% static 'imagen/ejemplo.jpeg' %}" alt="Imagen 5" class="image-container-U">
-        </div>
+        </div>-->
+
+        <div class="image-row" id="image-container"></div>
+
+        
         
         <!-- Botones -->
         <div class="row">
@@ -31,6 +35,7 @@
             <script>
             document.getElementById("cargarArchivo").addEventListener("click", function() {
                 window.location.href = "{% url 'index' %}";
+                request.session['extracted_text'] = ''
             });
             </script>
     

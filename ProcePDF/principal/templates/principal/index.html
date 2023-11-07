@@ -84,12 +84,18 @@
         <div class="row">    
             <button class="buttonPrimeros" type="submit" id="extract_btn" disabled>Extraer</button>
 
-            <button id="vIdeas" class="buttonSegundos" disabled>Ideas Principales</button>
-            <script>
-            document.getElementById("vIdeas").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaIdeas' %}";
-            });
-            </script>
+            <div>
+                <form method="post" action="{% url 'generarIdeasPrincipales' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="vIdeas" class="buttonSegundos" disabled>Ideas Principales</button>
+                </form>
+                <script>
+                    document.getElementById("vIdeas").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaIdeas' %}";
+                    });
+                </script>
+            </div>
 
             <div>
                 <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
@@ -107,12 +113,52 @@
         </div>
 
         <div class="row">
-            <button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
+            <!--<button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
             <script>
             document.getElementById("vImagenes").addEventListener("click", function() {
                 window.location.href = "{% url 'ventanaImagenes' %}";
             });
+            </script>-->
+
+            <button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
+            <script>
+            document.getElementById("vImagenes").addEventListener("click", function() {
+                $.ajax({
+                    url: "{% url 'buscarImagenes' %}",
+                    method: "GET",
+                    success: function(data) {
+                        if ('images' in data) {
+                            var imageContainer = window.open("{% url 'ventanaImagenes' %}", "_blank");
+                            imageContainer.addEventListener('load', function() {
+                                var imageContainerDoc = imageContainer.document;
+                                var imageRow = imageContainerDoc.getElementById("image-container");
+                                imageRow.innerHTML = ''; // Limpia el contenedor de imágenes
+                                for (var i = 0; i < data.images.length; i++) {
+                                    var img = imageContainerDoc.createElement("img");
+                                    img.src = data.images[i];
+                                    img.alt = "Imagen " + (i + 1);
+                                    if (i==0)
+                                        img.className = "image-container-P";
+                                    else if (i==data.images.length-1)
+                                        img.className = "image-container-C";
+                                    else
+                                        img.className = "image-container-C";
+                                    imageRow.appendChild(img);
+                                }
+                            });
+                            console.log(data.images)
+                        }
+                    },
+                    error: function() {
+                        alert('Error al buscar imágenes relacionadas');
+                    }
+                });
+            });
             </script>
+
+
+            
+
 
             <button id="vPpt" class="buttonSegundos" disabled>Presentación</button>
             <script>
@@ -121,12 +167,20 @@
             });
             </script>
             
-            <button id="vCollage" class="buttonTerceros" disabled>Collage</button>
-            <script>
-            document.getElementById("vCollage").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaCollage' %}";
-            });
-            </script>
+            <div>
+                <form method="post" action="{% url 'generarCollage' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="vCollage" class="buttonTerceros" disabled>Collage</button>
+                </form>
+                <script>
+                    document.getElementById("vCollage").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaCollage' %}";
+
+                    });
+                </script>
+            </div>
+
         </div>
         <label class="tituloTextExt">Texto Extraído</label>
         <div class="contenedorMediano" id="texto-extraido">

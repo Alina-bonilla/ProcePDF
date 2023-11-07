@@ -51,13 +51,18 @@
             <script>
             document.getElementById("cargarArchivo").addEventListener("click", function() {
                 window.location.href = "{% url 'index' %}";
+                request.session['extracted_text'] = ''
             });
             </script>
+            
             <button class="buttonTerceros">Descargar</button>
         </div>
-        <label class="contenedorMediano">
-            <img src="{% static 'imagen/ejemplo.jpeg' %}" alt="collage">
-        </label>
+
+        <div class="contenedorMediano">
+            <img src="data:image/png;base64,{{ collage_image }}" alt="Collage de palabras clave" class="formatoCollage">
+        </div>
+            
+        </div>
     </div>
     <!-- Contenido del pie de página -->
     <div class="pieDePagina">
