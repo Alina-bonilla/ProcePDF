@@ -16,6 +16,12 @@ from django.http import HttpResponse
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
+import requests
+import zipfile
+
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
+
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -25,6 +31,8 @@ def index(request):
     return render(request, 'principal/index.html')
 
 def ventanaIdeas(request):
+    #extracted_text = request.session.get('extracted_text', '')  
+    #return render(request, 'principal/ventanaIdeas.html', {'extracted_text': extracted_text})
     return render(request, 'principal/ventanaIdeas.html')
 
 def ventanaCollage(request):
@@ -75,9 +83,11 @@ def extraerTextoImagen(pdf_path):
             image_list.save(image_path)
 
             # Realiza la extracción de texto de la imagen con Pytesseract
-            extracted_text = pytesseract.image_to_string(Image.open(image_path))
+            #extracted_text = pytesseract.image_to_string(Image.open(image_path))
+            extracted_text = pytesseract.image_to_string(Image.open(image_path), lang='spa')
+
             text += extracted_text
-        eliminarImagen()
+        #eliminarImagen()
         return text
     else:
         return 'Archivo PDF no encontrado'
@@ -150,10 +160,7 @@ def generarIdeasPrincipales(request):
         ideasF = ''
         for i, idea in enumerate(ideas, start=1):
             ideasF += str(i) +'- ' + idea + '<br>'
-
         ideasF = mark_safe(ideasF)  # Utiliza mark_safe para que se interpreten las etiquetas HTML
-
-        print(ideasF)
         return render(request, 'principal/ventanaIdeas.html', {'text': text, 'ideas_principales': ideasF})
 
 def extraerIdeas(text, num_ideas=5):
@@ -192,27 +199,36 @@ def generarCollage(request):
                             "entiende", "más","mas", "sin embargo", "ver", "pues","puede","pueden","dio","da","fui","fue"
                             ])
         wc.generate(texto)
+
         # Cree una figura y muestre la imagen de la nube de palabras
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(30, 30))
         plt.imshow(wc, interpolation="bilinear")
         plt.axis("off")
 
         # Convierta la figura en una imagen PNG y luego en una cadena base64
         buffer = BytesIO()
-        plt.savefig(buffer, format="png")
+        plt.savefig(buffer, format="png", bbox_inches='tight')
         image_data = buffer.getvalue()
-        base64_image = base64.b64encode(image_data).decode("utf-8")
+        base64_image = base64.b64encode(image_data).decode("utf-8")      
+
+        buffer.seek(0)
+        image = Image.open(buffer)
+        # Obtiene la ruta de la carpeta 'imagenes' en la raíz del proyecto
+        images_dir = os.path.join(settings.BASE_DIR, 'imagenes')
+
+        # Verifica si la carpeta 'imagenes' existe, y si no, créala
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+        # Guarda la imagen en la carpeta 'imagenes' con el nombre 'imageCollage.png'
+        image_path = os.path.join(images_dir, 'imageCollage.png')
+        image.save(image_path)
 
         return render(request, 'principal/ventanaCollage.html', {'collage_image': base64_image})
 
 
-
-import requests
-from django.conf import settings
-from django.http import JsonResponse
 #Crea la busqueda de imagenes
-def buscarImagenes(request):
-    
+def buscarImagenes(request): 
+    #eliminarImagen()   
     access_key = "XXjQx3Qafdg7uqEiK96z3gcwc0PzDdeCw44NenAlAiw"  # Reemplaza con tu clave de acceso de Unsplash
     texto = request.session.get('extracted_text', '')
     search_term = palabraPrincipal(texto)
@@ -228,15 +244,24 @@ def buscarImagenes(request):
         for result in data['results']:
             images.append(result['urls']['regular'])
 
-        # Registra las imágenes en la consola
-        print("Imágenes encontradas:")
-        for image_url in images:
-            print(image_url)
+            image_url = result['urls']['regular']
+            # Descarga la imagen
+            response = requests.get(image_url, stream=True)
+            response.raise_for_status()
 
+            # Directorio donde se guardarán las imágenes
+            image_directory = os.path.join(settings.MEDIA_ROOT, 'images')
+            os.makedirs(image_directory, exist_ok=True)  # Crea el directorio si no existe
+
+            # Guarda la imagen en tu servidor
+            image_name = result['id'] + '.jpg'  # Puedes nombrar la imagen como quieras
+            image_path = os.path.join(image_directory, image_name)
+
+            with open(image_path, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
         return JsonResponse({'images': images})
     except requests.exceptions.RequestException as e:
-        # Registra errores en la consola
-        print(f"Error al buscar imágenes: {str(e)}")
         return JsonResponse({'error': str(e)})
 
 def palabraPrincipal(texto):# Obtener la palabra con mayor frecuencia
@@ -254,5 +279,151 @@ def palabraPrincipal(texto):# Obtener la palabra con mayor frecuencia
                     "entiende", "más", "mas", "sin embargo", "ver", "pues", "puede", "pueden", "dio", "da", "fui", "fue"],max_words=1)
     wc.generate(texto)  
     palabraFrecuente = list(wc.words_.keys())[0]
-    print('TEXTO: ' + palabraFrecuente)
+    #print('TEXTO: ' + palabraFrecuente)
     return palabraFrecuente
+
+
+#----------------------------------------------------------------- FUNCIONES DE DESCARGA -----------------------------------------------------------------
+def descargarIdeas(request):
+    ideas = request.POST.get('ideas')  # Obtén las ideas principales
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=ideas.txt'
+    response.write(ideas)
+    return response
+
+def descargar_imagenes(request):
+    images_directory = os.path.join(settings.MEDIA_ROOT, 'images')
+
+    # Verifica si el directorio de imágenes existe
+    if not os.path.exists(images_directory):
+        return HttpResponse("No se encontraron imágenes para descargar.")
+
+    # Crea un archivo ZIP en memoria
+    buffer = BytesIO()
+    with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        # Recorre las imágenes en el directorio y agrégalas al archivo ZIP
+        for root, dirs, files in os.walk(images_directory):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, os.path.relpath(file_path, images_directory))
+
+    # Configura la respuesta HTTP para el archivo ZIP
+    response = HttpResponse(buffer.getvalue(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename=imagenes.zip'
+
+    return response
+
+def descargarResumen(request):
+    resumen = request.POST.get('resumen')  # Obtén las ideas principales
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=resumen.txt'
+    response.write(resumen)
+    return response
+
+def download_collage(request):
+    images_directory = os.path.join(settings.MEDIA_ROOT, 'imagenes')
+    image_filename = 'imageCollage.png'  # Nombre de la imagen a descargar
+
+    # Verifica si el directorio de imágenes y la imagen existen
+    if not os.path.exists(images_directory) or not os.path.exists(os.path.join(images_directory, image_filename)):
+        return HttpResponse("No se encontró la imagen para descargar.")
+
+    # Construye la ruta completa de la imagen
+    image_path = os.path.join(images_directory, image_filename)
+
+    # Abre el archivo de imagen y lo envía como respuesta sin cerrarlo
+    image_file = open(image_path, 'rb')
+    response = FileResponse(image_file, content_type='image/png')
+    response['Content-Disposition'] = f'attachment; filename="{image_filename}"'
+
+    return response
+
+
+
+
+from django.http import FileResponse
+from django.template.loader import render_to_string
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+from pptx import Presentation
+from io import BytesIO
+from django.templatetags.static import static
+
+
+def generar_presentacion(request):
+    # Obtiene el título de la primera diapositiva del usuario
+    titulo = request.POST.get('titulo', 'Título de la presentación')
+
+    # Crea una presentación PPT
+    ppt = Presentation()
+
+    # Crea la primera diapositiva con el título
+    slide = ppt.slides.add_slide(ppt.slide_layouts[0])
+    title = slide.shapes.title
+    title.text = titulo
+
+    # Recupera las ideas principales y las imágenes de las ideas
+    ideas_principales = generarIdeasPrincipales(request)
+    imagenes_ideas = buscarImagenesPPT(request)
+
+    # Agrega una diapositiva por cada idea principal con su imagen
+    for idea in ideas_principales:
+        slide = ppt.slides.add_slide(ppt.slide_layouts[5])  # Puedes elegir un diseño de diapositiva adecuado
+        title = slide.shapes.title
+        title.text = "Idea Principal"
+
+        # Define las coordenadas y dimensiones de la imagen
+        left = 100  # Coordenada izquierda
+        top = 100   # Coordenada superior
+        width = 400  # Ancho
+        height = 300  # Altura
+
+        # Utiliza la ruta de la imagen por defecto desde los archivos estáticos de Django
+        default_image_path = static('ruta_imagen_default.png')
+        content = slide.shapes.add_picture(imagenes_ideas.get(idea, default_image_path), left, top, width, height)
+
+        #ppppppcontent = slide.shapes.add_picture(imagenes_ideas.get(idea, 'ruta_imagen_default.png'), left, top, width, height)
+
+        # Agrega la idea principal como texto adicional si es necesario
+        tf = content.text_frame
+        p = tf.add_paragraph()
+        p.text = idea
+
+    # Guarda la presentación en un archivo temporal
+    ppt_file = BytesIO()
+    ppt.save(ppt_file)
+
+    # Envía el archivo como respuesta para que se pueda abrir en la ventana VentanaPpt
+    ppt_file.seek(0)
+    response = FileResponse(ppt_file, content_type='application/vnd.openxmlformats-officedocument.presentationml.presentation')
+    response['Content-Disposition'] = f'attachment; filename=mi_presentacion.pptx'
+
+    return response
+
+
+#Crea la busqueda de imagenes
+def buscarImagenesPPT(request):    
+    access_key = "XXjQx3Qafdg7uqEiK96z3gcwc0PzDdeCw44NenAlAiw"  # Reemplaza con tu clave de acceso de Unsplash
+    texto = request.session.get('extracted_text', '')
+    search_term = palabraPrincipal(texto)
+    url = f'https://api.unsplash.com/search/photos?query={search_term}&per_page=1'
+    headers = {'Authorization': f'Client-ID {access_key}'}
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+        images = []
+        for result in data['results']:
+            images.append(result['urls']['regular'])
+        # Registra las imágenes en la consola
+        print("Imágenes encontradas:")
+        for image_url in images:
+            print(image_url)
+
+        return JsonResponse({'images': images})
+    except requests.exceptions.RequestException as e:
+        # Registra errores en la consola
+        print(f"Error al buscar imágenes: {str(e)}")
+        return JsonResponse({'error': str(e)})

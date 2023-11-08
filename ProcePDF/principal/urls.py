@@ -14,5 +14,13 @@ urlpatterns = [
     path('generarIdeasPrincipales/', views.generarIdeasPrincipales, name='generarIdeasPrincipales'),  
     path('generarCollage/', views.generarCollage, name='generarCollage'),
     path('buscarImagenes/', views.buscarImagenes, name='buscarImagenes'),
+    path('generar_presentacion/', views.generar_presentacion, name='generar_presentacion'),
+
+
+    path('descargar_ideas/', views.descargarIdeas, name='descargar_ideas'),
+    path('descargar_imagenes/', views.descargar_imagenes, name='descargar_imagenes'),
+    path('descargar_resumen/', views.descargarResumen, name='descargar_resumen'),
+    path('download_collage/', views.download_collage, name='download_collage'),
+
 
 ]

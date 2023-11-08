@@ -12,18 +12,25 @@
     </div>
 
     <div class="contenedorDescripcion">
-        <p>Las ideas principales del archivo “Nombre del archivo” son:</p>
+        <p>Las ideas principales del archivo ingresado son:</p>
     </div>
     
     <!-- Botones -->
     <div>
         <div class="row">
-            <button id="resumen" class="buttonPrimeros">Resumen</button>
-            <script>
-            document.getElementById("resumen").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaResumen' %}";
-            });
-            </script>
+            <div >
+                <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="resumen" class="buttonPrimeros">Resumen</button>
+                </form>
+                <script>
+                    document.getElementById("resumen").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaResumen' %}";
+
+                    });
+                </script>
+            </div>
 
             <button id="cargarArchivo" class="buttonSegundos">Cargar archivo</button>
             <script>
@@ -31,31 +38,35 @@
                 window.location.href = "{% url 'index' %}";
                 request.session['extracted_text'] = ''
             });
-            </script>
-
-            <button class="buttonTerceros">Descargar</button>
-
+            </script>          
         </div>
 
         <div class="row">
-            <button id="vImagenes" class="buttonPrimeros">Imágenes</button>
+            <div >
+                <form method="post" action="{% url 'generarCollage' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="vCollage" class="buttonPrimeros" >Collage</button>
+                </form>
+                <script>
+                    document.getElementById("vCollage").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaCollage' %}";
+
+                    });
+                </script>
+            </div>
+
+            <form id="descargarForm" method="post" action="{% url 'descargar_ideas' %}">
+                {% csrf_token %}
+                <input type="hidden" name="ideas" value="{{ ideas_principales|striptags|escapejs }}">
+            </form>
+            <button id="descargarIdeas" class="buttonSegundos">Descargar</button>
             <script>
-            document.getElementById("vImagenes").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaImagenes' %}";
-            });
+                document.getElementById("descargarIdeas").addEventListener("click", function() {
+                    document.getElementById("descargarForm").submit();
+                });
             </script>
-            <button id="vCollage" class="buttonSegundos">Collage</button>
-            <script>
-            document.getElementById("vCollage").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaCollage' %}";
-            });
-            </script>           
-            <button id="vPpt" class="buttonTerceros">Presentación</button>
-            <script>
-            document.getElementById("vPpt").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaPpt' %}";
-            });
-            </script>
+
         </div>
 
         <label class="tituloTextExt">Ideas principales del texto</label>

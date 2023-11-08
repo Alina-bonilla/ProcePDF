@@ -66,14 +66,13 @@
     margin-bottom: 80px; 
   }
 
-
-.buttonPrimeros {   
+.buttonPrimerosResumen{   
     margin-left: 15%;
     border: none;
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 8%; /* Ancho del botón personalizado */
+    width: 100%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -83,28 +82,29 @@
     margin-right: 5px;
 }
 
-.buttonSegundos {   
-    margin-left: 1%;
+.buttonPrimeros {   
+    margin-left: 15%;
     border: none;
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 12%; /* Ancho del botón personalizado */
+    width: 100%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
     font-family: 'Helvetica';
     font-size: 17px;
-    margin-right: 5px;
+    text-align: center;
+    margin-right: 10%;
 }
 
-.buttonTerceros {   
-    margin-left: 1%;
+.buttonSegundos {   
+    margin-left: 5%;
     border: none;
     border-radius: 10px;
     padding: 10px 10px;
     cursor: pointer;
-    width: 8%; /* Ancho del botón personalizado */
+    width: 100%; /* Ancho del botón personalizado */
     height: 2%; /* Ajusta la altura según tus necesidades */
     background-color: #004AAD; /* Color de fondo del botón */
     color: white; /* Color del texto en el botón */
@@ -117,6 +117,9 @@
 .row {
     display: flex;
     margin-top: 3%;
+    margin-left: 15%;
+    width: 20%;
+    margin-right: 5px;
 }
 
 .pieDePagina {  

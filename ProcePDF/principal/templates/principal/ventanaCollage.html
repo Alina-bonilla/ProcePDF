@@ -12,50 +12,59 @@
     </div>
 
     <div class="contenedorDescripcion">
-        <p>El collage de las palabras claves del texto que se encuentra en el archivo “Nombre del archivo” es:</p>
+        <p>El collage de las palabras claves del texto que se encuentra en el archivo es:</p>
     </div>
     
     <!-- Botones -->
     <div>
         <div class="row">
-            <button id="vImagenes" class="buttonPrimeros">Imágenes</button>
-            <script>
-            document.getElementById("vImagenes").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaImagenes' %}";
-            });
-            </script>
-
-            <button id="vIdeas" class="buttonSegundos">Ideas Principales</button>
-            <script>
-            document.getElementById("vIdeas").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaIdeas' %}";
-            });
-            </script>
-
-            <button id="vPpt" class="buttonTerceros">Presentación</button>
-            <script>
-            document.getElementById("vPpt").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaPpt' %}";
-            });
-            </script>
-        </div>
-        <div class="row">
-            <button id="resumen" class="buttonPrimeros">Resumen</button>
-            <script>
-            document.getElementById("resumen").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaResumen' %}";
-            });
-            </script>
-
-            <button id="cargarArchivo" class="buttonSegundos">Cargar archivo</button>
+            <button id="cargarArchivo" class="buttonPrimeros">Cargar archivo</button>
             <script>
             document.getElementById("cargarArchivo").addEventListener("click", function() {
                 window.location.href = "{% url 'index' %}";
                 request.session['extracted_text'] = ''
             });
             </script>
+
+            <div>
+                <form method="post" action="{% url 'generarIdeasPrincipales' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="vIdeas" class="buttonSegundos" >Ideas Principales</button>
+                </form>
+                <script>
+                    document.getElementById("vIdeas").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaIdeas' %}";
+                    });
+                </script>
+            </div>
             
-            <button class="buttonTerceros">Descargar</button>
+
+            
+        </div>
+        <div class="row">
+            <div >
+                <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ text }}">
+                    <button id="resumen" class="buttonPrimerosI">Resumen</button>
+                </form>
+                <script>
+                    document.getElementById("resumen").addEventListener("click", function() {
+                        window.location.href = "{% url 'ventanaResumen' %}";
+
+                    });
+                </script>
+            </div>
+
+        
+            <button id="descargaImagen" class="buttonTerceros">Descargar</button>
+            <script>
+            document.getElementById("descargaImagen").addEventListener("click", function() {
+                window.location.href = "{% url 'download_collage' %}";
+            });
+            </script
+
         </div>
 
         <div class="contenedorMediano">

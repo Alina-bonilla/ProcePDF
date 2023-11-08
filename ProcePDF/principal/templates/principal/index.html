@@ -58,8 +58,7 @@
                                 console.log(data)
                                 if ('text' in data) {
                                     $('#text_result').text(data.text);
-                                    // Después de extraer el texto con éxito
-                                    var extractedText = data.text;
+                                    var extractedText = data.text;// Después de extraer el texto con éxito
                                     $('#text_input').val(extractedText);
 
                                 } else {
@@ -97,11 +96,11 @@
                 </script>
             </div>
 
-            <div>
+            <div margin-left=10%>
                 <form method="post" action="{% url 'generarResumen' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="text" value="{{ text }}">
-                    <button id="resumen" class="buttonTerceros" disabled>Resumen</button>
+                    <button id="resumen" class="buttonTercerosI" disabled>Resumen</button>
                 </form>
                 <script>
                     document.getElementById("resumen").addEventListener("click", function() {
@@ -113,13 +112,6 @@
         </div>
 
         <div class="row">
-            <!--<button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
-            <script>
-            document.getElementById("vImagenes").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaImagenes' %}";
-            });
-            </script>-->
-
             <button id="vImagenes" class="buttonPrimeros" disabled>Imágenes</button>
             <script>
             document.getElementById("vImagenes").addEventListener("click", function() {
@@ -146,7 +138,7 @@
                                     imageRow.appendChild(img);
                                 }
                             });
-                            console.log(data.images)
+                            console.log('TEXTO: ' + request.session.get('extracted_text', ''))
                         }
                     },
                     error: function() {
@@ -155,18 +147,7 @@
                 });
             });
             </script>
-
-
-            
-
-
-            <button id="vPpt" class="buttonSegundos" disabled>Presentación</button>
-            <script>
-            document.getElementById("vPpt").addEventListener("click", function() {
-                window.location.href = "{% url 'ventanaPpt' %}";
-            });
-            </script>
-            
+           
             <div>
                 <form method="post" action="{% url 'generarCollage' %}" enctype="multipart/form-data">
                     {% csrf_token %}

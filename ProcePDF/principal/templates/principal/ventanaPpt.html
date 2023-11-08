@@ -12,12 +12,18 @@
     </div>
 
     <div class="contenedorDescripcion">
-        <p>A continuación, se muestra una ppt del “Nombre del archivo”, recuerde que puede acerle todas las modificaciones que sean necesarias.”</p>
+        <p>A continuación, se muestra una ppt del archivo, recuerde que puede acerle todas las modificaciones que sean necesarias.”</p>
     </div>
     
     <div>
         <div>
             Opciones de ppt
+            <form method="post" action="{% url 'generar_presentacion' %}">
+                {% csrf_token %}
+                <label for="titulo">Título de la primera diapositiva:</label>
+                <input type="text" name="titulo" id="titulo" required>
+                <button type="submit">Crear Presentación</button>
+            </form>
         </div>
         
         <!-- Botones -->
